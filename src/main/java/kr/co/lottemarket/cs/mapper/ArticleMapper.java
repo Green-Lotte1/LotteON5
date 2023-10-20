@@ -20,5 +20,6 @@ public interface ArticleMapper {
 
 	public List<ArticleDTO> selectAjaxCate1(int group);
 	
+	public ArticleDTO selectComment(int no);
 	
 }

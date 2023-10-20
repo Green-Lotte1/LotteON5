@@ -18,9 +18,11 @@ public class PageResponseDTO {
 	private int total;
 	private int start,end;
 	private boolean prev,next;
+	private int parent;
 	
 	@Builder
 	public PageResponseDTO(PageRequestDTO pageRequestDTO,List<ProductDTO> dtoList, int total) {
+		
 		this.pg = pageRequestDTO.getPg();
 		this.size = pageRequestDTO.getSize();
 		this.total = total;

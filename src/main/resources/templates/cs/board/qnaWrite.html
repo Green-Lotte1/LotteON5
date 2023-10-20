@@ -25,6 +25,7 @@
 		        if (xhr.status >= 200 && xhr.status < 300) {
 		            // 이전 옵션 제거
 		            while (category2Select.firstChild) {
+						console.log("category2Select.firstChild = " + category2Select.firstChild)
 		                category2Select.removeChild(category2Select.firstChild);
 		            }
 		

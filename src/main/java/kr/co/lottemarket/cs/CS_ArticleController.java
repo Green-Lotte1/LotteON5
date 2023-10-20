@@ -57,6 +57,7 @@ public class CS_ArticleController {
 			
 			model.addAttribute("state", "list");
 			
+			
 			return "/cs/board/list";
 			
 		}else {
@@ -108,11 +109,34 @@ public class CS_ArticleController {
 			log.info("article title = " + article.getTitle() );
 			log.info("article content = " + article.getContent() );
 			log.info("article rdate = " + article.getRdate() );
+			log.info("article comment = " + article.getComment());
+			
+
+			log.info(pageRequestDTO.getNo());
+			//답글 출력
+
+			//초기값
+			ArticleDTO comment = null;
+			
+			if (article.getComment() == 1) {
+				comment = articleSerivce.selectComment(pageRequestDTO.getNo());
+			} else {
+				comment = new ArticleDTO();
+			}
+			
+
+			log.info("pageRequestDTO.getParent() = " + pageRequestDTO.getParent());
+			log.info("pageRequestDTO.getNo() = " + pageRequestDTO.getNo());
+			log.info("comment = " + comment);
+			
+			model.addAttribute("comment", comment);
+			
+			
 			if(pageRequestDTO.getGroup() == 2) {
 				return "/cs/board/faqView";
 			}else {
 				return "/cs/board/view";
-		}
+			}
 		
 		
 		

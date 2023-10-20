@@ -63,7 +63,6 @@ public class CsSerivce {
 	  }
 	
 	
-	
 	//메인페이지 글 출력
 	public List<ArticleDTO> selectIndex(int group){
 		return mapper.selectIndex(group);
@@ -78,6 +77,11 @@ public class CsSerivce {
 	//Ajax글 카테고리2
 	public List<ArticleDTO> selectAjaxCate2(int group, int cate1){
 		return mapper.selectAjaxCate2(group, cate1);
+	}
+	
+	//qna 답변 출력
+	public ArticleDTO selectComment(int no){
+		return mapper.selectComment(no);
 	}
 	
 	
