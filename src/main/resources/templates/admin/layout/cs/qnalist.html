@@ -39,13 +39,15 @@
                     <td style="text-align:center; width:5" th:text="${qnalist.no}"></td>
                     <td style="text-align:center; width:10%" th:text="${qnalist.q}"></td>
                     <td style="text-align:center; width:10%" th:text="${qnalist.q2}"></td>
-                    <td style="text-align:center; width:40%">
-                        <a th:href="@{/admin/layout/cs/qnaview(no=${qnalist.no})}" th:text="${qnalist.title}"></a>
+                    <td th:if="${comment == 0}" style="text-align:center; width:40%">
+                        <a  th:href="@{/admin/layout/cs/qnaview(no=${qnalist.no})}" th:text="${qnalist.title}"></a>
                     </td>
+                    <td th:if="${comment != 0}" style="text-align:center; width:40%">[[${qnalist.title}]]</td>
                     <td style="text-align:center; width:10%" th:text="${#temporals.format(qnalist.rdate, 'yy-MM-dd')}"></td>
-                    <td style="text-align:center; width:10%; color: red;">[처리중]</td>
-                    <td style="text-align:center; width:10%">
-                        <a th:href="@{/admin/layout/cs/qnaview(no=${qnalist.no})}" class="qnaModify">[답변]</a>
+                    <td th:if="${comment == 0}" style="text-align:center; width:10%; color: red;">[처리중]</td>
+					<td th:if="${comment != 0}" style="text-align:center; width:10%; color: green;">[처리완료]</td>
+					<td style="text-align:center; width:10%">
+                        <a th:if="${comment == 0}" th:href="@{/admin/layout/cs/qnaview(no=${qnalist.no})}" class="qnaModify">[답변]</a>
                         <a href="#" class="qnaDelete">[삭제]</a>
                     </td>
                 </tr>
@@ -54,8 +56,16 @@
             <input type="button" value="선택 삭제" class="csDelete"/>
 
             <div class="paging">
-                
-            </div>
+		        <span th:if="${pageStartNum > 1}">
+		            <a th:href="@{/admin/layout/cs/qnalist(pg=${pageStartNum - 1})}" class="prev">이전</a>
+		        </span>
+		        <span th:each="page : ${#numbers.sequence(1, totalPages)}" th:class="num">
+		            <a th:href="@{/admin/layout/cs/qnalist(pg=${page})}" th:text="${page}" th:class="num"></a>
+		        </span>
+		        <span th:if="${pageEndNum < totalPages}">
+		            <a th:href="@{/admin/layout/cs/qnalist(pg=${pageEndNum + 1})}">다음</a>
+		        </span>
+			</div>
         </section>
     </section>
 </html>

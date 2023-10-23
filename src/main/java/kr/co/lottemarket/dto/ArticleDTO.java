@@ -37,6 +37,7 @@ public class ArticleDTO {
 	private String q;
 	private String q2;
 	private LocalDateTime rdate;
+	private int comment;
 	 public ArticleEntity toEntity(){
 	        return ArticleEntity.builder()
 	                .no(no)
@@ -48,6 +49,7 @@ public class ArticleDTO {
 	                .title(title)
 	                .content(content)
 	                .rdate(rdate)
+	                .comment(comment)
 	                .build();
 	    }
 }
