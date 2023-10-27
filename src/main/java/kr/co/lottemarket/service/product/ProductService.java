@@ -21,10 +21,13 @@ import kr.co.lottemarket.dto.product.PageResponseDTO;
 import kr.co.lottemarket.dto.product.ProductCartDTO;
 import kr.co.lottemarket.dto.product.ProductDTO;
 import kr.co.lottemarket.dto.product.ProductOrderItemDTO;
+import kr.co.lottemarket.dto.product.ProductReviewDTO;
 import kr.co.lottemarket.entity.product.ProductCartEntity;
 import kr.co.lottemarket.entity.product.ProductEntity;
 import kr.co.lottemarket.entity.product.ProductOrderItemEntity;
+import kr.co.lottemarket.entity.product.ProductReviewEntity;
 import kr.co.lottemarket.entity.user.UserEntity;
+import kr.co.lottemarket.repository.mypage.ReviewRepository;
 import kr.co.lottemarket.repository.product.ProductCartRepository;
 import kr.co.lottemarket.repository.product.ProductOrderItemRepository;
 import kr.co.lottemarket.repository.product.ProductRepository;
@@ -41,7 +44,9 @@ public class ProductService {
 	private final ProductRepository repo;
 	private final ProductCartRepository cartrepo;
 	private final ProductOrderItemRepository orderrepo;
+	private final ReviewRepository reviewrepo;
 	private final UserRepository userepo;
+	
 	private final ModelMapper modelmapper;
 	int total = 0;
 	List<ProductDTO> dtoPage = null;
@@ -183,10 +188,14 @@ public class ProductService {
 		return entitys;
 	}
 	
-	public List<Object[]> findProductsByOrderItem(String uid) {
+	public List<ProductOrderItemDTO> findProductsByOrderItem(String uid) {
+		
 		uid="seller1";
-		List<Object[]> entitys = orderrepo.findProductsByOrderItem(uid);
-		return entitys;
+		UserEntity entity = new UserEntity();
+		entity.setUid(uid);
+		List<ProductOrderItemEntity> entitys = orderrepo.findByUser(entity);
+		List<ProductOrderItemDTO> dto = entitys.stream().map(e-> modelmapper.map(e, ProductOrderItemDTO.class)).toList();
+		return dto;
 	}
 	
 	public void deleteProductByCart(List<Integer> cartNo) {
@@ -309,6 +318,16 @@ public class ProductService {
 	    
 	    
 		Admin_ProductPageResponseDTO dto= Admin_ProductPageResponseDTO.builder().pageRequestDTO(pageRequestDTO).dtoList(dtoPage).total(total).build();
+		return dto;
+		
+	}
+	
+	public List<ProductReviewDTO> findReview(int prodNo){
+		ProductEntity entity = new ProductEntity();
+		entity.setProdNo(prodNo);
+		List<ProductReviewEntity> entityList = reviewrepo.findByProductOrderByRevNoDesc(entity);
+		List<ProductReviewDTO> dto = entityList.stream().map(e-> modelmapper.map(e, ProductReviewDTO.class)).toList();
+		
 		return dto;
 		
 	}

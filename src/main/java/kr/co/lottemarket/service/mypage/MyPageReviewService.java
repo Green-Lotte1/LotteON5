@@ -78,4 +78,16 @@ public class MyPageReviewService {
 		 
 		 return list;
 	}
+	
+	public List<ProductReviewDTO> reviewFindTop5(){
+		
+		UserEntity entity = new UserEntity();
+		entity.setUid("seller1");
+		List<ProductReviewEntity> entityList= reviewRepo.findTop5ByUserOrderByRegDateDesc(entity);
+		List<ProductReviewDTO> dtoList = entityList.stream().map(e -> modelmapper.map(e, ProductReviewDTO.class)).toList();
+		
+		return dtoList;
+		
+		
+	}
 }

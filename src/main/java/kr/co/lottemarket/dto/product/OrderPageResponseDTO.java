@@ -26,13 +26,12 @@ public class OrderPageResponseDTO {
 		this.size = OrderPageRequestDTO.getSize();
 		this.total = total;
 		this.dtoList = dtoList;
-		this.cate1 = OrderPageRequestDTO.getCate1();
-		this.cate2 = OrderPageRequestDTO.getCate2();
 		this.end = (int) (Math.ceil(this.pg / 10.0)) * 10;
 		this.start = this.end - 9;
 		int last = (int) (Math.ceil(total / (double) size));
 		
 		this.end = end > last ? last : end;
+		this.end = end < 1 ? 1 : end;
 		this.prev = this.start > 1 ;
 		this.next = total > this.end * this.size;
 		

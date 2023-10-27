@@ -25,13 +25,6 @@ public class OrderPageRequestDTO {
 	@Builder.Default
 	private int size = 10;
 	
-	@Builder.Default
-	private int cate1 = 11;
-	
-	
-	@Builder.Default
-	private int cate2 = 11;
-	
 	private int type = 0;
 	public Pageable getPageable() {
 		

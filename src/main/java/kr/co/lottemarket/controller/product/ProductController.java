@@ -18,6 +18,7 @@ import kr.co.lottemarket.dto.admin.Admin_ProductPageResponseDTO;
 import kr.co.lottemarket.dto.product.PageRequestDTO;
 import kr.co.lottemarket.dto.product.PageResponseDTO;
 import kr.co.lottemarket.dto.product.ProductDTO;
+import kr.co.lottemarket.dto.product.ProductReviewDTO;
 import kr.co.lottemarket.service.admin.AdminService;
 import kr.co.lottemarket.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -56,8 +57,11 @@ public class ProductController {
 
         // 포맷팅 적용
         String formatedNow = formatter.format(wDate);
+        
+        List<ProductReviewDTO> review = service.findReview(dto.getProdNo());
         model.addAttribute("formatedNow",formatedNow);
 	    model.addAttribute("dto",proddto);
+	    model.addAttribute("review",review);
 		
 		return "/product/productView";
 	}
