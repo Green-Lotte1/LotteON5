@@ -80,6 +80,10 @@ document.addEventListener('DOMContentLoaded', function(){
 	hpInput1.readOnly = false;
 	hpInput2.readOnly = false;
 	hpInput3.readOnly = false;
+	
 		
-	});	
+	});
+	
+	
+
 });
