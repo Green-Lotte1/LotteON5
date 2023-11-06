@@ -20,40 +20,38 @@ $(function(){
     });
 
     // 수취확인 팝업 띄우기
-    $('.latest .confirm > .receive').click(function(e){
-        e.preventDefault();
-        var closestInput = $(this).closest('td').find('input');
-        $('input[name=ordComNo]').remove();
-        var inputDate = $('<input>',{type:'hidden',name:'ordComNo',value:closestInput.val()});
-        console.log("log" + closestInput.val());
-        $('#popReceive').addClass('on');
-        
-        $('#popReceive').append(inputDate);
-    });
-    $('.btnConfirm').click(function(e){
+   $('.latest .confirm > .receive').click(function(e) {
+    e.preventDefault();
+    var closestInput = $(this).closest('td').find('input');
+    var statusElement = $(this).closest('tr').find('.status');
+    
+    $('input[name=ordComNo]').remove();
+    var inputDate = $('<input>', { type: 'hidden', name: 'ordComNo', value: closestInput.val() });
+    console.log("log" + closestInput.val());
+    $('#popReceive').addClass('on');
+    $('#popReceive').append(inputDate);
+
+    $('.btnConfirm').off('click').on('click', function(e) {
         e.preventDefault();
         var inputElement = $('input[name="ordComNo"]');
-        
         $.ajax({
-			url : '/LotteON/my/point/'+inputElement.val(),
-			type : 'GET',
-			dataType : 'json',
-			success : function(result){
-				if(result == 1){
-					alert("수취확인 완료하였습니다.")
-					
-				}else{
-					alert("수취확인 실패하였습니다.")
-				}
-					
-			}
-			
-			
-			
-		})
+            url: '/LotteON/my/point/' + inputElement.val(),
+            type: 'GET',
+            dataType: 'json',
+            success: function(result) {
+                if (result == 1) {
+                    alert("수취확인 완료하였습니다.");
+                    statusElement.text('배송완료').css('color', 'blue');
+                } else {
+                    alert("수취확인 실패하였습니다.");
+                }
+            }
+        });
         console.log("log" + inputElement.val());
         $('#popReceive').removeClass('on');
     });
+});
+   
     
     $('.btnReview').click(function(e){
 		e.preventDefault();
